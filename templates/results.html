@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matched Jobs</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="hero card compact">
+      <h1>Matched Jobs</h1>
+      <a href="/">New Search</a>
+    </header>
+
+    {% if errors %}
+    <section class="card alert">
+      {% for err in errors %}
+        <div>{{ err }}</div>
+      {% endfor %}
+    </section>
+    {% endif %}
+
+    <section class="card summary">
+      <div><strong>Search:</strong> {{ summary.search_term }}</div>
+      <div><strong>Location:</strong> {{ summary.location }}</div>
+      <div><strong>Sites:</strong> {{ summary.sites }}</div>
+      <div><strong>Skills:</strong> {{ summary.skills }}</div>
+      <div><strong>Expected Experience:</strong> {{ summary.expected_experience }}</div>
+      <div><strong>Job Type:</strong> {{ summary.job_type }}</div>
+      <div><strong>Total Jobs:</strong> {{ summary.jobs_found }}</div>
+      <div><strong>Regular Jobs:</strong> {{ summary.regular_jobs_found }}</div>
+      <div><strong>Intern Jobs:</strong> {{ summary.intern_jobs_found }}</div>
+    </section>
+
+    <section class="card">
+      <h2>Regular Jobs</h2>
+      {% if rows %}
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Site</th>
+              <th>Title</th>
+              <th>Company</th>
+              <th>Location</th>
+              <th>Date</th>
+              <th>Score</th>
+              <th>Experience Fit</th>
+              <th>Matched Skills</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in rows %}
+            <tr>
+              <td>{{ row.site }}</td>
+              <td>{{ row.title }}</td>
+              <td>{{ row.company }}</td>
+              <td>{{ row.location }}</td>
+              <td>{{ row.date_posted }}</td>
+              <td><span class="score">{{ row.match_score }}</span></td>
+              <td>{{ row.experience_fit }}</td>
+              <td>{{ row.matched_skills }}</td>
+              <td><a href="{{ row.job_url }}" target="_blank" rel="noopener">Open</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p>No regular jobs found for this request.</p>
+      {% endif %}
+    </section>
+
+    <section class="card">
+      <h2>Intern Jobs</h2>
+      {% if intern_rows %}
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Site</th>
+              <th>Title</th>
+              <th>Company</th>
+              <th>Location</th>
+              <th>Date</th>
+              <th>Score</th>
+              <th>Experience Fit</th>
+              <th>Matched Skills</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in intern_rows %}
+            <tr>
+              <td>{{ row.site }}</td>
+              <td>{{ row.title }}</td>
+              <td>{{ row.company }}</td>
+              <td>{{ row.location }}</td>
+              <td>{{ row.date_posted }}</td>
+              <td><span class="score">{{ row.match_score }}</span></td>
+              <td>{{ row.experience_fit }}</td>
+              <td>{{ row.matched_skills }}</td>
+              <td><a href="{{ row.job_url }}" target="_blank" rel="noopener">Open</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p>No intern jobs found for this request.</p>
+      {% endif %}
+    </section>
+  </main>
+</body>
+</html>
+

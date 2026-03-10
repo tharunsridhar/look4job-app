@@ -1,0 +1,13 @@
+﻿fastapi
+uvicorn
+jinja2
+python-multipart
+pypdf
+pandas
+requests
+beautifulsoup4
+numpy
+pydantic
+tls-client
+markdownify
+regex

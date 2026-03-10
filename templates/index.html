@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>look4job</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="hero card">
+      <h1>look4job</h1>
+      <p>Upload resume PDF, auto-convert to TXT, and match jobs instantly.</p>
+    </header>
+
+    <section class="card">
+      {% if errors %}
+      <div class="alert">
+        {% for err in errors %}
+          <div>{{ err }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <form action="/match" method="post" enctype="multipart/form-data" class="form">
+        <label>Upload Resume PDF</label>
+        <input type="file" name="resume_file" accept="application/pdf,.pdf" required />
+
+        <div class="grid2">
+          <div>
+            <label>Search Term</label>
+            <input name="search_term" value="{{ defaults.search_term }}" />
+          </div>
+          <div>
+            <label>Location</label>
+            <input name="location" value="{{ defaults.location }}" />
+          </div>
+        </div>
+
+        <div>
+          <label>Where To Search</label>
+          <div class="site-grid">
+            {% for site in defaults.site_options %}
+            <label class="site-option">
+              <input type="checkbox" name="sites" value="{{ site }}" {% if site in defaults.selected_sites %}checked{% endif %} />
+              <span>{{ site.replace('_', ' ') }}</span>
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div>
+          <label>Which Jobs Do You Want?</label>
+          <div class="site-grid">
+            {% for option in defaults.job_type_options %}
+            <label class="site-option">
+              <input type="radio" name="job_type" value="{{ option }}" {% if option == defaults.job_type %}checked{% endif %} />
+              <span>{{ option.title() }}</span>
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="grid3">
+          <div>
+            <label>Expected Experience (years)</label>
+            <input type="number" min="0" step="0.5" name="expected_experience" value="{{ defaults.expected_experience }}" />
+          </div>
+          <div>
+            <label>Results Wanted</label>
+            <input type="number" min="1" name="results_wanted" value="{{ defaults.results_wanted }}" />
+          </div>
+          <div>
+            <label>Max Age (hours)</label>
+            <input type="number" min="1" name="hours_old" value="{{ defaults.hours_old }}" />
+          </div>
+        </div>
+
+        <button type="submit">Find</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
